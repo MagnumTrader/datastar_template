@@ -1,0 +1,16 @@
+[package]
+name = "blank-web-project"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = { version = "0.8.4", features = ["macros"] }
+maud = { version = "0.27.0", features = ["axum"] }
+tokio = { version = "1.45.1", features = ["macros", "rt-multi-thread"] }
+tower-http = { version = "0.6.6", features = ["fs"] }
+datastar = { version = "*", features = ["axum"]}
+futures = "0.3.31"
+serde = { version = "1.0.219", features = ["derive"] }
+async-stream = "0.3.6"
+serde_json = "1.0.140"
+
