@@ -51,6 +51,12 @@ async fn looper() -> impl IntoResponse {
     const MSG: &'static str = "Hello World!";
     Sse(stream! {
         for i in 0..MSG.len() {
+
+            // Smoother rendering when " " is encountered
+            if i > 0 &&  MSG[i-1..i] == *" "{
+                continue;
+            }
+
             yield MergeFragments::new(html!(p class="text-3xl" {(MSG[..i])})).merge_mode(FragmentMergeMode::Inner).selector("#target").into_event();
             tokio::time::sleep(std::time::Duration::from_millis(150)).await;
         }
@@ -60,6 +66,8 @@ async fn looper() -> impl IntoResponse {
             s
         })}
         )).merge_mode(FragmentMergeMode::Inner).selector("#target").into_event();
+
+        // Re-enables the button when done.
         yield MergeSignals::new("{sent: false}").into_event()
     })
 }
